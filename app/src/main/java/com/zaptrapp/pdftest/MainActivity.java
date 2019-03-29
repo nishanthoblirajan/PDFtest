@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.itextpdf.text.Document;
@@ -36,20 +38,19 @@ public class MainActivity extends AppCompatActivity {
         initpdf();
     }
 
+    public static final String TAG = MainActivity.class.getSimpleName();
     private void openPDF(String filename){
-        Log.d("open", "openPDF: ");
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+ filename);
-        Intent target = new Intent(Intent.ACTION_VIEW);
-        target.setDataAndType(Uri.fromFile(file),"application/pdf");
-        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        Intent intent = Intent.createChooser(target, "Open File");
-
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "Install a pdf reader application to open pdf files", Toast.LENGTH_SHORT).show();
-            // Instruct the user to install a PDF reader here, or something
-        }
+        Log.d(TAG, "openPDF: "+filename);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/vindroid/"+filename);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri apkURI = FileProvider.getUriForFile(
+                getApplicationContext(),
+                this.getApplicationContext()
+                        .getPackageName() + ".provider", file);
+        intent.setDataAndType(apkURI, "application/pdf");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(intent);
     }
 
     private void initpdf() {
@@ -110,10 +111,13 @@ public class MainActivity extends AppCompatActivity {
         } finally
         {
             document.close();
-            openPDF("/vindroid/sample.pdf");
         }
 
 
 
+    }
+
+    public void pdfOpen(View view) {
+        openPDF("sample.pdf");
     }
 }
