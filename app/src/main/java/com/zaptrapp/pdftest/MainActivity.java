@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
             describer.setWidthPercentage(100);
             describer.addCell(getdescCell(" "));
             describer.addCell(getdescCell("Goods once sold will not be taken back or exchanged || Subject to product justification || Product damage no one responsible || "
-                    + " Service only at concarned authorized service centers"));
+                    + " Service only at concerned authorized service centers"));
 
             document.open();//PDF document opened........
 
