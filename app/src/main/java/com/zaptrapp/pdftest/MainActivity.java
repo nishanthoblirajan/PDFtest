@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
             PdfPTable irdTable = new PdfPTable(2);
             irdTable.addCell(getIRDCell("Invoice No"));
             irdTable.addCell(getIRDCell("Invoice Date"));
-            irdTable.addCell(getIRDCell("XE1234")); // pass invoice number
-            irdTable.addCell(getIRDCell("29-Mar-2019")); // pass invoice date
+            irdTable.addCell(getIRDCell("00001")); // pass invoice number
+            irdTable.addCell(getIRDCell("01-April-2019")); // pass invoice date
 
             PdfPTable irhTable = new PdfPTable(3);
             irhTable.setWidthPercentage(100);
